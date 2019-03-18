@@ -1,3 +1,7 @@
+
+#ifndef __CT_DEF_H__
+#define __CT_DEF_H__
+
 #define STRUCT_TABLE_SIZE			50
 #define MAX_STRUCT_MEMBERS			10
 #define STRING_TABLE_SIZE			250
@@ -148,34 +152,13 @@ typedef struct {
 } _USER_FUNC;
 _USER_FUNC user_func_table[MAX_USER_FUNC];
 
-struct _keyword_table{
+typedef struct {
 	char *keyword;
 	_ATOM key;
-} keyword_table[] = {
-	"void", VOID,
-	"char", CHAR,
-	"int", INT,
-	"float", FLOAT,
-	"double", DOUBLE,
-	"const", CONST,
-	"enum", ENUM,
-	"struct", STRUCT,
-	"sizeof", SIZEOF,
-	"return", RETURN,
-	"if", IF,
-	"then", THEN,
-	"else", ELSE,
-	"for", FOR,
-	"do", DO,
-	"break", BREAK,
-	"continue", CONTINUE,
-	"while", WHILE,
-	"switch", SWITCH,
-	"case", CASE,
-	"default", DEFAULT,
-	"include", INCLUDE,
-	"", 0
-};
+} _keyword_table;
+
+// lib.c
+extern _keyword_table keyword_table[];
 
 typedef enum {
 	SYNTAX,
@@ -228,57 +211,8 @@ typedef enum {
 	INVALID_PRINTF_FORMAT_CODE
 } _ERROR;
 
-// variable declaration
-char *error_table[] = {
-	"syntax error",
-	"syntax error: opening parenthesis expected",
-	"syntax error: closing parenthesis expected",
-	"syntax error: opening brace expected",
-	"syntax error: closing brace expected",
-	"syntax error: opening bracket expected",
-	"syntax error: closing bracket expected",
-	"syntax error: comma expected",
-	"syntax error: semicolon expected",
-	"syntax error: variable type expected in the declaration",
-	"syntax error: identifier expected",
-	"global variable limit reached (max = 100)",
-	"function declaration limit reached (max = 100)",
-	"syntax error: only variable and function declarations are allowed outside of functions",
-	"main funtion not found",
-	"undeclared function",
-	"syntax error: single quote expected",
-	"syntax error: double quotes expected",
-	"undeclared variable or unkown constant",
-	"maximum number of function paramters reached (max = 10)",
-	"maximum number of program-defined function calls reached (max = 100)",
-	"local variables limit reached (max = 200)",
-	"returning value from void function",
-	"invalid expression",
-	"invalid argument for the bitwise not operation",
-	"while part of do-while loop expected",
-	"duplicate global variable declared",
-	"duplicate local variable declared",
-	"string constant expected",
-	"pointer expected",
-	"insufficient function arguments",
-	"pointer syntax error",
-	"declared matrix exceeds the maximum number of dimensions (max = 10)",
-	"invalid matrix dimension",
-	"memory allocation failure",
-	"matrix index outside bounds",
-	"invalid matrix attribution",
-	"matrix expected",
-	"unkown library",
-	"unknown directive",
-	"directive syntax error",
-	"incompatible function argument",
-	"constant variable assignment",
-	"invalid binary operands",
-	"struct expected",
-	"struct name expected but token is not an identifier for any structs",
-	"undeclared struct",
-	"invalid printf format code"
-};
+// variable declaration lib.c
+extern char *error_table[];
 
 // a table to hold library function entries that have been added by #include
 struct{
@@ -398,3 +332,5 @@ void exec_continue(void);
 void include_lib(char *lib_name);
 _STRUCT *get_struct_table_pointer(char *struct_name);
 _DATA get_constant(char *str);
+
+#endif //__CT_DEF_H__
