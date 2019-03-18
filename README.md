@@ -14,5 +14,7 @@ TODO
 
 * lots of clang warnings
 * unit tests
+* switch
+* structs
 
 original code: https://github.com/Pconst167/C_Interpreter
