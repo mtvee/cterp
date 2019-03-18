@@ -23,6 +23,7 @@
 struct s1{
 	int i;
 };
+
 struct hah{
 	struct s1 hey[100];
 };
