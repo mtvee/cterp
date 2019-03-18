@@ -7,6 +7,8 @@
 #endif
 #include <math.h>
 #include <time.h>
+#include <ctype.h>
+
 #include "def.h"
 #include "lib.h"
 
@@ -25,7 +27,7 @@ int main(int argc, char *argv[]){
 
 
 	/*
-	register int i,j;
+	int i,j;
 	for(i=0; i<struct_table_index; i++){
 		puts(struct_table[i].struct_name);
 		for(j=0; *struct_table[i].fields[j].field_name; j++){
@@ -50,7 +52,7 @@ void initial_setup(void){
 }
 
 void free_mem(void){
-	register int i;
+	int i;
 	free_string_table();
 	free(pbuf);
 	
@@ -67,7 +69,7 @@ void load_program(char *filename){
 		exit(0);
 	}
 	
-	if((pbuf = malloc(PROG_SIZE)) == NULL){
+	if((pbuf = (char *)malloc(PROG_SIZE)) == NULL){
 		printf("failed to allocate memory for the program source");
 		exit(0);
 	}
@@ -150,7 +152,7 @@ void call_lib_func(_FPTR fp){
 }
 
 _FPTR find_lib_func(char *func_name){
-	register int i;
+	int i;
 	
 	for(i = 0; *active_func_table[i].func_name; i++)
 		if(!strcmp(active_func_table[i].func_name, func_name)) return active_func_table[i].fp;
@@ -160,7 +162,7 @@ _FPTR find_lib_func(char *func_name){
 
 _DATA get_constant(char *str){
 	_DATA d;
-	register int i;
+	int i;
 	
 	
 	for(i = 0; i < active_const_table_tos; i++)
@@ -173,7 +175,7 @@ _DATA get_constant(char *str){
 }
 
 void execute_main(void){
-	register int i;
+	int i;
 
 	for(i = 0; *user_func_table[i].func_name; i++)
 		if(!strcmp(user_func_table[i].func_name, "main")){
@@ -222,7 +224,7 @@ void call_func(int func_index){
 	prog = t;
 	
 // frees any arrays created by this function
-	register int i;
+	int i;
 	for(i = local_var_tos_history[user_func_call_index - 1]; i < local_var_tos; i++)
 		if(_is_matrix(&local_variables[i])) free(local_variables[i].data.value.p);
 	
@@ -235,7 +237,7 @@ void call_func(int func_index){
 }
 
 void get_func_parameters(int func_index){
-	register int i;
+	int i;
 	_VAR var;
 
 	// if this function has no parameters
@@ -1187,7 +1189,7 @@ char get_data_size(_DATA *data){
 }
 
 _VAR *get_var_pointer(char *var_name){
-	register int i;
+	int i;
 
 	for(i = local_var_tos_history[user_func_call_index - 1]; i < local_var_tos; i++)
 		if(!strcmp(local_variables[i].var_name, var_name))
@@ -1201,7 +1203,7 @@ _VAR *get_var_pointer(char *var_name){
 }
 
 char is_matrix(char *var_name){
-	register int i;
+	int i;
 
 	for(i = local_var_tos_history[user_func_call_index - 1]; i < local_var_tos; i++)
 		if(!strcmp(local_variables[i].var_name, var_name))
@@ -1219,7 +1221,7 @@ char _is_matrix(_VAR *var){
 }
 
 char get_ind_level(char *var_name){
-	register int i;
+	int i;
 	
 	for(i = local_var_tos_history[user_func_call_index - 1]; i < local_var_tos; i++)
 		if(!strcmp(local_variables[i].var_name, var_name))
@@ -1233,7 +1235,7 @@ char get_ind_level(char *var_name){
 }
 
 char get_var_type(char *var_name){
-	register int i;
+	int i;
 
 	for(i = local_var_tos_history[user_func_call_index - 1]; i < local_var_tos; i++)
 		if(!strcmp(local_variables[i].var_name, var_name)) 
@@ -1254,7 +1256,7 @@ char is_pointer(_DATA *data){
 }
 
 void *get_var_address(char *var_name){
-	register int i;
+	int i;
 
 	for(i = local_var_tos_history[user_func_call_index - 1]; i < local_var_tos; i++)
 		if(!strcmp(local_variables[i].var_name, var_name)) 
@@ -1331,7 +1333,7 @@ void unary_bitwise_not(_DATA *v){
 }
 
 void incr_var(char *var_name){
-	register int i;
+	int i;
 
 	for(i = local_var_tos_history[user_func_call_index - 1]; i < local_var_tos; i++)
 		if(!strcmp(local_variables[i].var_name, var_name)){
@@ -1373,7 +1375,7 @@ void incr_var(char *var_name){
 }
 
 void decr_var(char *var_name){
-	register int i;
+	int i;
 
 	for(i = local_var_tos_history[user_func_call_index - 1]; i < local_var_tos; i++)
 		if(!strcmp(local_variables[i].var_name, var_name)){
@@ -1512,7 +1514,7 @@ void convert_constant(){
 }
 
 void assign_var(char *var_name, _DATA *v){
-	register int i;
+	int i;
 
 //check local variables first, from the previous stack index to the current one
 	for(i = local_var_tos_history[user_func_call_index - 1]; i < local_var_tos; i++)
@@ -1535,7 +1537,7 @@ void assign_var(char *var_name, _DATA *v){
 }
 
 _DATA get_var_value(char *var_name){
-	register int i;
+	int i;
 	
 	//check local variables first, from the previous stack index to the current one
 	for(i = local_var_tos_history[user_func_call_index - 1]; i < local_var_tos; i++)
@@ -1648,7 +1650,7 @@ void declare_struct(void){
 }
 
 _STRUCT *find_struct(char *struct_name){
-	register int i;
+	int i;
 
 	for(i = 0; i < struct_table_index; i++)
 		if(!strcmp(struct_table[i].struct_name, struct_name)) return &struct_table[i];
@@ -1763,7 +1765,7 @@ void declare_global(void){
 }
 
 _STRUCT *get_struct_table_pointer(char *struct_name){
-	register int i;
+	int i;
 	
 	for(i = 0; *struct_table[i].struct_name; i++)
 		if (!strcmp(struct_table[i].struct_name, struct_name)) return &struct_table[i];
@@ -2012,7 +2014,7 @@ char *add_string(void){
 		string_table_tos = 0;
 	}
 	
-	if( (string_table[string_table_tos] = malloc(strlen(string_constant) + 1)) == NULL ) show_error(MEMORY_ALLOCATION_FAILURE);
+	if( (string_table[string_table_tos] = (char *)malloc(strlen(string_constant) + 1)) == NULL ) show_error(MEMORY_ALLOCATION_FAILURE);
 
 	strcpy(string_table[string_table_tos], string_constant);
 	string_table_tos++;
@@ -2021,7 +2023,7 @@ char *add_string(void){
 }
 
 void free_string_table(void){
-	register int i;
+	int i;
 	
 	for(i = string_table_tos - 1; i >= 0; i--)
 		free(string_table[i]);
@@ -2227,7 +2229,7 @@ void get_token(void){
 }
 
 int find_user_func(char *func_name){
-	register int i;
+	int i;
 	
 	for(i = 0; *user_func_table[i].func_name; i++)
 		if(!strcmp(user_func_table[i].func_name, func_name))
@@ -2237,7 +2239,7 @@ int find_user_func(char *func_name){
 }
 
 int find_local_var(char *var_name){
-	register int i;
+	int i;
 	
 	for(i = local_var_tos_history[user_func_call_index - 1]; (i < local_var_tos) && (*local_variables[i].var_name); i++)
 		if(!strcmp(local_variables[i].var_name, var_name)) return i;
@@ -2246,7 +2248,7 @@ int find_local_var(char *var_name){
 }
 
 int find_global_var(char *var_name){
-	register int i;
+	int i;
 	
 	for(i = 0; (i < global_var_tos) && (*global_variables[i].var_name); i++)
 		if(!strcmp(global_variables[i].var_name, var_name)) return i;
@@ -2255,7 +2257,7 @@ int find_global_var(char *var_name){
 }
 
 _VAR *find_variable(char *var_name){
-	register int i;
+	int i;
 
 	//check local variables first, from the previous stack index to the current one
 	for(i = local_var_tos_history[user_func_call_index - 1]; (i < local_var_tos) && (*local_variables[i].var_name); i++)
@@ -2273,7 +2275,7 @@ void local_push(_VAR *var){
 }
 
 int find_keyword(char *keyword){
-	register int i;
+	int i;
 	
 	for(i = 0; keyword_table[i].key; i++)
 		if (!strcmp(keyword_table[i].keyword, keyword)) return keyword_table[i].key;
@@ -3339,7 +3341,7 @@ char is_idchar(char c){
 }
 
 void include_lib(char *lib_name){
-	register int i, j;
+	int i, j;
 
 	for(i = 0; *libs[i].lib_name; i++){
 		if(!strcmp(libs[i].lib_name, lib_name)){
