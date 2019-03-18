@@ -7,12 +7,12 @@ Changes
 * use CMake for build
 * refactored code into lib.c
 * removed conio refs if not _WIN32
+* MIT License (with original authors permission)
 
 TODO
 ----
 
 * lots of clang warnings
 * unit tests
-* original code is unlicensed (this code is MIT with original authors permission)
 
 original code: https://github.com/Pconst167/C_Interpreter
