@@ -13,6 +13,6 @@ TODO
 
 * lots of clang warnings
 * unit tests
-* original code is unlicensed (this code is MIT afaic but IANAL)
+* original code is unlicensed (this code is MIT with original authors permission)
 
 original code: https://github.com/Pconst167/C_Interpreter
