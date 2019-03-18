@@ -126,11 +126,13 @@ void call_nCk(void);
 int factorial(int N);
 
 // conio
+#ifdef _WIN32
 void call_kbhit(void);
 void call_getch(void);
 void call_getche(void);
 void call_clrscr(void);
 void call_putch(void);
+#endif
 
 void call_asctime(void);
 void call_clock(void);
@@ -225,6 +227,7 @@ _LIB string_lib[] = {
 	"", 0
 };
 
+#ifdef _WIN32
 _LIB conio_lib[] = {
 	"kbhit", call_kbhit,
 	"getch", call_getch,
@@ -233,6 +236,7 @@ _LIB conio_lib[] = {
 	"clrscr", call_clrscr,
 	"", 0
 };
+#endif
 
 _LIB time_lib[] = {
 	"asctime", call_asctime,
@@ -254,7 +258,9 @@ struct{
 	"stdlib", stdlib_lib, stdlib_const_table,
 	"math", math_lib, math_const_table,
 	"string", string_lib, string_const_table,
+	#ifdef _WIN32
 	"conio", conio_lib, conio_const_table,
+	#endif
 	"time", time_lib, time_const_table,
 	"stdbool", stdbool_lib, stdbool_const_table,
 	"", NULL, NULL
@@ -1166,6 +1172,7 @@ void call_getchar(void){
 	func_ret.value.c = getchar();
 }
 
+#ifdef _WIN32
 void call_kbhit(void){
 	get_token();
 	if(tok != CLOSING_PAREN) show_error(CLOSING_PAREN_EXPECTED);
@@ -1196,3 +1203,4 @@ void call_putch(void){
 	
 	putch(func_ret.value.c);
 }
+#endif

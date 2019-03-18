@@ -1,29 +1,26 @@
 #include <stdio>
 #include <math>
 #include <stdlib>
-#include <conio>
 #include <string>
 
-void main(){
+void main()
+{
 	char a[100];
-
 
 	strcpy(a, "saldaslkdjeofdlnerd");
 
-
 	quick(a, strlen(a));
 
-	puts(a);
-
-	system("pause");
-	
+	puts(a);	
 }
 
-void quick(char *items, int count){
+void quick(char *items, int count)
+{
 	qs(items, 0, count - 1);
 }
 
-void qs(char *items, int left, int right){
+void qs(char *items, int left, int right)
+{
 	int i, j;
 	char x, y;
 	

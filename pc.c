@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <setjmp.h>
+#ifdef _WIN32
 #include <conio.h>
+#endif
 #include <math.h>
 #include <time.h>
 #include "def.h"
